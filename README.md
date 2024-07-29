@@ -1,3 +1,26 @@
-# Fullstack Authentication Example with Next.js and NextAuth.js
+# Simple application for tracking your habits
 
-This is the starter project for the fullstack tutorial with Next.js and Prisma. You can find the final version of this project in the [`final`](https://github.com/prisma/blogr-nextjs-prisma/tree/final) branch of this repo.
+## backend
+
+- [ ] add route / user with admin role
+- [ ] middlewares
+- [ ] cors + helmet
+
+refactoring:
+
+- [ ] routes -> move to services/controllers
+- [ ] add error handling
+- [ ] make code mode readable
+
+## frontend
+
+- [ ] new theme palette
+- [ ] change colors to theme palette
+- [ ] responsive design
+- [ ] detect device
+
+- [ ] add account info
+- [ ] refresh token if expired
+
+- [ ] analytics page ?
+- [ ] settings page ?
