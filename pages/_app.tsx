@@ -1,9 +1,3 @@
-import { AppProps } from "next/app";
+import '@styles/resetBrowserStyles.css'
 
-const App = ({ Component, pageProps }: AppProps) => {
-  return (
-    <Component {...pageProps} />
-  );
-};
-
-export default App;
+export { default } from '@app'
