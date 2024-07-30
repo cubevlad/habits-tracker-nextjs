@@ -41,7 +41,7 @@ export class HabitsController {
 
       return data
     } catch {
-      return {}
+      return undefined
     }
   }
 

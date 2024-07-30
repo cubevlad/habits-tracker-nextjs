@@ -53,6 +53,8 @@ export class HabitsStore {
   updateHabit = async (habit: Pick<Habit, 'goal' | 'id' | 'name'>) => {
     const habitFromServer = await this.transportLayer.habitsService.habits.updateHabit(habit)
 
+    if (!habitFromServer) return
+
     runInAction(() => {
       this.habits = this.habits.map((item) => (item.id === habit.id ? habitFromServer : item))
     })
