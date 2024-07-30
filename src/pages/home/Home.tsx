@@ -2,7 +2,7 @@ import { CircularProgress, Stack } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 
 import { useStore } from '@shared/context'
-// import { HabitsView } from '@widgets/HabitsView'
+import { HabitsView } from '@widgets/HabitsView'
 
 import { useFetchHomePageData } from './lib'
 
@@ -23,7 +23,7 @@ const HomePage: React.FC = observer(() => {
 
   return (
     <Stack flex='1 1 auto' spacing={2}>
-      {/* <HabitsView /> */}
+      <HabitsView />
     </Stack>
   )
 })

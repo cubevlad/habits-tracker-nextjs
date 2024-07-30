@@ -1,5 +1,4 @@
-import styled from '@emotion/styled'
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Typography, styled } from '@mui/material'
 
 export const StyledFormWrapper = styled(Box)`
   position: absolute;
@@ -19,16 +18,16 @@ export const StyledTitle = styled(Typography)`
 
 export const StyledForm = styled(Stack)`
   padding: 40px;
-  border: 1px solid ${({ theme }) => theme.palette.primary};
+  border: 1px solid ${({ theme }) => theme.palette.primary.main};
   border-radius: 8px;
   width: 100%;
 `
 
 export const StyledSubmitButton = styled(Button)`
-  background-color: ${({ theme }) => theme.palette.primary};
-  color: ${({ theme }) => theme.palette.text};
+  background-color: ${({ theme }) => theme.palette.primary.main};
+  color: ${({ theme }) => theme.palette.text.primary};
 
   &.Mui-disabled {
-    background-color: ${({ theme }) => theme.palette.gray};
+    background-color: ${({ theme }) => theme.palette.text.disabled};
   }
 `

@@ -1,8 +1,8 @@
-import styled from '@emotion/styled'
+import { styled } from '@mui/material'
 
 const border = '1px solid #e0e0e0'
 
-export const StyledTableWrapper = styled.div`
+export const StyledTableWrapper = styled('div')`
   overflow: auto hidden;
   margin-bottom: 24px;
 
@@ -13,14 +13,14 @@ export const StyledTableWrapper = styled.div`
   }
 `
 
-export const StyledTable = styled.table`
+export const StyledTable = styled('table')`
   width: calc(50% + 700px);
   min-width: 100%;
   table-layout: fixed;
   margin-bottom: 24px;
 `
 
-export const StyledTableHeader = styled.thead`
+export const StyledTableHeader = styled('thead')`
   display: table-header-group;
   vertical-align: middle;
   unicode-bidi: isolate;
@@ -28,21 +28,21 @@ export const StyledTableHeader = styled.thead`
   border: ${border};
 `
 
-export const StyledTableBody = styled.tbody`
+export const StyledTableBody = styled('tbody')`
   display: table-row-group;
   vertical-align: middle;
   unicode-bidi: isolate;
   border-color: inherit;
 `
 
-export const StyledTableRow = styled.tr`
+export const StyledTableRow = styled('tr')`
   display: table-row;
   vertical-align: inherit;
   unicode-bidi: isolate;
   border-color: inherit;
 `
 
-export const StyledTableTd = styled.td<{ $color?: string }>`
+export const StyledTableTd = styled('td')<{ $color?: string }>`
   text-align: center;
   padding: 8px;
   border: ${border};
@@ -54,7 +54,7 @@ export const StyledTableTd = styled.td<{ $color?: string }>`
   background-color: ${({ $color }) => $color ?? 'unset'};
 `
 
-export const StyledTableTh = styled.th<{ $isCurrent?: boolean }>`
+export const StyledTableTh = styled('th')<{ $isCurrent?: boolean }>`
   text-align: center;
   padding: 14px 4px !important;
   border: ${border};

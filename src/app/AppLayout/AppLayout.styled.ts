@@ -1,5 +1,4 @@
-import { Stack, Box } from '@mui/material'
-import styled from 'styled-components'
+import { Stack, Box, styled } from '@mui/material'
 
 export const StyledWrapper = styled(Stack)`
   overflow: auto;

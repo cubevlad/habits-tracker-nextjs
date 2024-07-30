@@ -1,5 +1,7 @@
 import type { PrismaClient } from '@prisma/client'
+import type { JwtPayload } from 'jsonwebtoken'
 import { sign, decode } from 'jsonwebtoken'
+import type { NextApiRequest } from 'next'
 
 import prisma from '../lib/prisma'
 
@@ -85,12 +87,12 @@ class TokenController {
   /**
    * Get data from token
    */
-  public getUserData = (req) => {
+  public getUserData = (req: NextApiRequest) => {
     const authHeader = req.headers?.authorization
     const token = authHeader?.split(' ')[1]
     if (token) {
       const obj = decode(token)
-      return obj
+      return obj as JwtPayload
     }
     return undefined
   }
