@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+
 import { ArrowBack } from '@mui/icons-material'
 import { IconButton, Stack, Typography } from '@mui/material'
 import { observer } from 'mobx-react-lite'
@@ -13,13 +15,24 @@ import { ItemModalView } from './ui'
 
 type CardProps = {
   item: TableViewItem
+  matchMedia?: {
+    isXXl: boolean
+    isXl: boolean
+    isLg: boolean
+    isSm: boolean
+    isMd: boolean
+  }
 }
 
-export const Card: React.FC<CardProps> = observer(({ item }) => {
+export const Card: React.FC<CardProps> = observer(({ item, matchMedia }) => {
   const {
     notesStore: { getNotesById },
     habitStore: { habits, flatHabitsWithFlatRecordsList },
   } = useStore()
+
+  const isLg = matchMedia?.isLg
+  const isMd = matchMedia?.isMd
+  const isSm = matchMedia?.isSm
 
   const {
     NoteForm,
@@ -36,7 +49,7 @@ export const Card: React.FC<CardProps> = observer(({ item }) => {
 
   const areFormsClosed = !isNoteFormOpen && !isHabitsFormOpen
 
-  const dayName = item.weekDayName
+  const dayName = isLg || isMd ? item.shortWeekDayName : item.weekDayName
   const notesLength = (getNotesById(item.id) ?? []).length
   const habitsLength = habits.length
 
@@ -56,9 +69,23 @@ export const Card: React.FC<CardProps> = observer(({ item }) => {
 
   const handleItemClick = () => !item.disabled && openDialog()
 
+  const cardRef = useRef<HTMLDivElement | null>(null)
+  const handleCardRef = (element: HTMLDivElement | null) => {
+    if (element && item.isCurrent) {
+      cardRef.current = element
+    }
+  }
+
+  useEffect(() => {
+    if (!cardRef.current || !item.isCurrent) return
+
+    cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [item.isCurrent, isSm])
+
   return (
     <>
       <StyledCardWrapper
+        ref={handleCardRef}
         $disabled={item.disabled}
         $isAchieved={isCardAchieved}
         $selected={item.isCurrent}

@@ -37,19 +37,23 @@ class Api extends EventEmitter {
       (response) => response,
       async (error) => {
         const originalRequest = error.config
+        if (!isRefreshing) {
+          isRefreshing = true
+        }
 
-        if (error.response.status === 401) {
-          if (!isRefreshing) {
-            isRefreshing = true
+        try {
+          const response = await this.instance.get('/user/refresh')
+          const newAccessToken = response.data.accessToken
 
-            const data = await this.instance.get('/user/refresh')
-            if (axios.defaults.headers) {
-              setAccessToken(data.data.accessToken)
-              axios.defaults.headers.common.Authorization = `Bearer ${data.data.accessToken}`
-            }
-
-            return this.instance(originalRequest)
+          if (newAccessToken) {
+            setAccessToken(newAccessToken)
+            this.instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`
+            isRefreshing = false
+            return await this.instance(originalRequest)
           }
+        } catch (refreshError) {
+          this.emit('apiError', refreshError)
+          return Promise.reject(refreshError)
         }
 
         this.emit('apiError', error)

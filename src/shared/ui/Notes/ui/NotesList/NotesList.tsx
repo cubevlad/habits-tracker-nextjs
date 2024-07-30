@@ -15,7 +15,7 @@ export const NotesList: React.FC<NotesListProps> = observer(({ notes }) => {
       <Typography variant='h6'>Заметки</Typography>
       {!notes.length ? <Typography variant='body1'>Нет заметок</Typography> : null}
       <Box sx={{ width: '100%' }}>
-        <Grid container columns={{ xs: 4, sm: 8, md: 12 }} spacing={{ xs: 2, md: 3 }}>
+        <Grid container spacing={{ xs: 2, md: 3 }}>
           {notes.map((note) => (
             <NoteListItem key={note.id} note={note} />
           ))}

@@ -1,0 +1,22 @@
+import type { ButtonProps } from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
+
+import { StyledSubmitButton } from '@styles'
+
+type ExtendedButtonProps = {
+  isLoading?: boolean
+}
+type LoadingButtonProps = ButtonProps & ExtendedButtonProps
+
+export const LoadingButton: React.FC<LoadingButtonProps> = ({
+  isLoading,
+  onClick,
+  children,
+  ...props
+}) => {
+  return (
+    <StyledSubmitButton disabled={isLoading} onClick={onClick} {...props}>
+      {isLoading ? <CircularProgress color='inherit' size={24} /> : children}
+    </StyledSubmitButton>
+  )
+}

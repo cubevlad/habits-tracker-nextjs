@@ -29,7 +29,7 @@ export const NoteListItem: React.FC<NoteListItemProps> = observer(({ note }) => 
   const handleClick = () => handleNoteFormOpen(note, createdAt)
 
   return (
-    <Grid item lg={3} md={6} sm={8} xs={12}>
+    <Grid item lg={4} md={6} sm={6} xl={2} xs={12}>
       <StyledNoteListItem>
         <StyledNoteListItemHeader direction='row' spacing={1}>
           <Typography flex='1 1 auto' variant='body2'>
@@ -42,7 +42,9 @@ export const NoteListItem: React.FC<NoteListItemProps> = observer(({ note }) => 
             <Delete fontSize='small' sx={ICON_SX} />
           </IconButton>
         </StyledNoteListItemHeader>
-        <Typography variant='body2'> {note.content}</Typography>
+        <Typography sx={{ wordBreak: 'break-word' }} variant='body2'>
+          {note.content}
+        </Typography>
       </StyledNoteListItem>
     </Grid>
   )

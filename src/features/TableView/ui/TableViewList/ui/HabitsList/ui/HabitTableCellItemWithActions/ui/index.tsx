@@ -2,6 +2,8 @@ import { Stack } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 
 import { useStore } from '@shared/context'
+import { useStatusCallback } from '@shared/lib'
+import { LoadingButton } from '@shared/ui'
 import { StyledFormWrapper, StyledTitle, StyledSubmitButton } from '@styles'
 
 type DeleteModalContentProps = {
@@ -14,11 +16,13 @@ export const DeleteModalContent: React.FC<DeleteModalContentProps> = observer(({
     habitStore: { deleteHabit },
   } = useStore()
 
-  const handleDelete = async (e: React.MouseEvent) => {
-    e.stopPropagation()
-    await deleteHabit(id)
-    onClose(e)
-  }
+  const { isPending, wrappedCallback: handleDelete } = useStatusCallback(
+    async (e: React.MouseEvent) => {
+      e.stopPropagation()
+      await deleteHabit(id)
+      onClose(e)
+    }
+  )
 
   return (
     <StyledFormWrapper borderRadius={8} maxWidth={520} p={4}>
@@ -27,9 +31,9 @@ export const DeleteModalContent: React.FC<DeleteModalContentProps> = observer(({
         <StyledSubmitButton variant='contained' onClick={onClose}>
           Нет
         </StyledSubmitButton>
-        <StyledSubmitButton variant='outlined' onClick={handleDelete}>
+        <LoadingButton isLoading={isPending} variant='outlined' onClick={handleDelete}>
           Да
-        </StyledSubmitButton>
+        </LoadingButton>
       </Stack>
     </StyledFormWrapper>
   )

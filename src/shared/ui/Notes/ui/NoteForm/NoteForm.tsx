@@ -1,13 +1,15 @@
 import { useLayoutEffect } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import { TextareaAutosize } from '@mui/material'
+import { TextField } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 import { useForm, FormProvider } from 'react-hook-form'
 
 import { useStore } from '@shared/context'
+import { useStatusCallback } from '@shared/lib/hooks'
 import type { Note } from '@shared/types'
-import { StyledForm, StyledFormWrapper, StyledSubmitButton, StyledTitle } from '@styles'
+import { LoadingButton } from '@shared/ui/LoadingButton'
+import { StyledForm, StyledFormWrapper, StyledTitle } from '@styles'
 
 import { DEFAULT_NOTE_FORM_VALUES, noteSchema } from './model'
 
@@ -33,19 +35,21 @@ export const NoteForm = observer(({ note, onClose, createdAt: createdAtProp }: N
 
   const {
     register,
-    formState: { isValid },
+    formState: { isValid, errors },
     handleSubmit,
     reset,
   } = methods
 
-  const handleSubmitForm = async ({ content }: { content: string }) => {
-    // eslint-disable-next-line no-unused-expressions
-    note
-      ? await updateNote({ content, id: note.id })
-      : await createNote({ content, createdAt: createdAt ?? currentViewDate })
+  const { isPending, wrappedCallback: handleSubmitForm } = useStatusCallback(
+    async ({ content }: { content: string }) => {
+      // eslint-disable-next-line no-unused-expressions
+      note
+        ? await updateNote({ content, id: note.id })
+        : await createNote({ content, createdAt: createdAt ?? currentViewDate })
 
-    onClose?.()
-  }
+      onClose?.()
+    }
+  )
 
   useLayoutEffect(() => {
     if (note) {
@@ -61,20 +65,24 @@ export const NoteForm = observer(({ note, onClose, createdAt: createdAtProp }: N
       <StyledFormWrapper borderRadius={8} minWidth={520} p={4}>
         <StyledTitle variant='h4'> {note ? 'Редактирование' : 'Создание'} заметки </StyledTitle>
         <StyledForm spacing={4}>
-          <TextareaAutosize
+          <TextField
             {...register('content')}
-            minRows={8}
+            multiline
+            error={!!errors.content}
+            helperText={errors.content?.message}
+            minRows={4}
             placeholder='Напишите ваши мысли'
           />
-          <StyledSubmitButton
+          <LoadingButton
             disabled={!isValid}
+            isLoading={isPending}
             sx={{ mt: 2 }}
             type='button'
             variant='outlined'
             onClick={handleSubmit(handleSubmitForm)}
           >
             Сохранить
-          </StyledSubmitButton>
+          </LoadingButton>
         </StyledForm>
       </StyledFormWrapper>
     </FormProvider>

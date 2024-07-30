@@ -11,6 +11,8 @@ import {
   Stack,
 } from '@mui/material'
 
+import { useMatchMedia } from '@shared/lib'
+
 import { DEFAULT_DIALOG_PAPER_PROPS } from './lib'
 
 type DialogProps = {
@@ -66,10 +68,13 @@ export const Dialog: React.FC<DialogProps> = ({
 
   const paperProps = DialogPaperProps ?? DEFAULT_DIALOG_PAPER_PROPS
 
+  const { isSm } = useMatchMedia()
+
   return (
     <MuiDialog
       aria-describedby='scroll-dialog-description'
       aria-labelledby='scroll-dialog-title'
+      fullScreen={isSm}
       open={open}
       PaperProps={paperProps}
       scroll='paper'

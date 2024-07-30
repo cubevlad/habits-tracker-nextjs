@@ -4,6 +4,7 @@ export const StyledNoteListItem = styled('div')`
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: 8px;
   padding: 1rem;
+  height: 100%;
 `
 
 export const StyledNoteListItemHeader = styled(Stack)`

@@ -21,6 +21,7 @@ export const TableView: React.FC = observer(() => {
     initialViewDate,
     currentViewDate,
   })
+
   const daysOfNextMonthList = createTableViewItemsList({
     initialViewDate,
     currentViewDate: new Date(copy.setMonth(copy.getMonth() + 1)),

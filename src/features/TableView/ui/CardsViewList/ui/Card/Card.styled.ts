@@ -15,6 +15,10 @@ export const StyledCardWrapper = styled('div')<{
 
     return $isAchieved ? ACHIEVED_COLOR : 'unset'
   }};
+
+  @media screen and (max-width: 600px) {
+    height: 100px;
+  }
 `
 
 export const StyledChip = styled(Chip)`

@@ -6,10 +6,13 @@ import { observer } from 'mobx-react-lite'
 import { useForm, FormProvider } from 'react-hook-form'
 
 import { useStore } from '@shared/context'
+import { useStatusCallback } from '@shared/lib'
 import type { Habit } from '@shared/types'
-import { StyledFormWrapper, StyledTitle, StyledForm, StyledSubmitButton } from '@styles'
+import { StyledFormWrapper, StyledTitle, StyledForm } from '@styles'
 
 import { DEFAULT_HABIT_FORM_VALUES, type HabitFormType, habitSchema } from './model'
+
+import { LoadingButton } from '../LoadingButton'
 
 type HabitFormProps = {
   habit?: Habit
@@ -35,15 +38,17 @@ export const HabitForm: React.FC<HabitFormProps> = observer(({ habit: habitProp,
     handleSubmit,
   } = methods
 
-  const handleSubmitForm = async (habit: Pick<Habit, 'goal' | 'name'>) => {
-    // eslint-disable-next-line no-unused-expressions
-    habitProp
-      ? await updateHabit({ ...habit, id: habitProp.id })
-      : await createHabit({ ...habit, startedAt: currentViewDate })
+  const { isPending, wrappedCallback: handleSubmitForm } = useStatusCallback(
+    async (habit: Pick<Habit, 'goal' | 'name'>) => {
+      // eslint-disable-next-line no-unused-expressions
+      habitProp
+        ? await updateHabit({ ...habit, id: habitProp.id })
+        : await createHabit({ ...habit, startedAt: currentViewDate })
 
-    onClose?.()
-    reset(DEFAULT_HABIT_FORM_VALUES)
-  }
+      onClose?.()
+      reset(DEFAULT_HABIT_FORM_VALUES)
+    }
+  )
 
   useLayoutEffect(() => {
     if (habitProp) {
@@ -75,15 +80,16 @@ export const HabitForm: React.FC<HabitFormProps> = observer(({ habit: habitProp,
             type='number'
             variant='outlined'
           />
-          <StyledSubmitButton
+          <LoadingButton
             disabled={!isValid}
+            isLoading={isPending}
             sx={{ mt: 2 }}
             type='button'
             variant='outlined'
             onClick={handleSubmit(handleSubmitForm)}
           >
             {habitProp ? 'Сохранить' : 'Создать'}
-          </StyledSubmitButton>
+          </LoadingButton>
         </StyledForm>
       </StyledFormWrapper>
     </FormProvider>
