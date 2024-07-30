@@ -33,12 +33,16 @@ export class HabitsController {
   }
 
   public updateHabit = async (habit: Pick<Habit, 'goal' | 'id' | 'name'>) => {
-    const { data } = await this.instance.put<Habit>(`habits/update/${habit.id}`, {
-      goal: habit.goal,
-      name: habit.name,
-    })
+    try {
+      const { data } = await this.instance.put<Habit>(`habits/update/${habit.id}`, {
+        goal: habit.goal,
+        name: habit.name,
+      })
 
-    return data
+      return data
+    } catch {
+      return {}
+    }
   }
 
   public updateHabitRecord = async (record: HabitRecord) => {
