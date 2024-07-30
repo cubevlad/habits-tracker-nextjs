@@ -1,7 +1,5 @@
-import { useState } from 'react'
-
 import { Delete, Edit } from '@mui/icons-material'
-import { Box, IconButton, Stack, Typography } from '@mui/material'
+import { Grid, IconButton, Typography } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 
 import { useFormCtx, useStore } from '@shared/context'
@@ -18,8 +16,6 @@ type NoteListItemProps = {
 export const NoteListItem: React.FC<NoteListItemProps> = observer(({ note }) => {
   const createdAt = formatRu(new Date(note.createdAt), 'd MMMM yyyy', false)
 
-  const [isVisible, setIsVisible] = useState(false)
-
   const {
     notesStore: { deleteNote },
   } = useStore()
@@ -30,31 +26,24 @@ export const NoteListItem: React.FC<NoteListItemProps> = observer(({ note }) => 
     await deleteNote(note.id, note.createdAt)
   }
 
-  const handleMouseEnter = () => setIsVisible(true)
-  const handleMouseLeave = () => setIsVisible(false)
-
   const handleClick = () => handleNoteFormOpen(note, createdAt)
 
   return (
-    <StyledNoteListItem onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <StyledNoteListItemHeader direction='row' spacing={1}>
-        <Typography flex='1 1 auto' variant='body2'>
-          {createdAt}
-        </Typography>
-        {isVisible ? (
+    <Grid item lg={3} md={6} sm={8} xs={12}>
+      <StyledNoteListItem>
+        <StyledNoteListItemHeader direction='row' spacing={1}>
+          <Typography flex='1 1 auto' variant='body2'>
+            {createdAt}
+          </Typography>
           <IconButton size='small' onClick={handleClick}>
             <Edit fontSize='inherit' sx={ICON_SX} />
           </IconButton>
-        ) : null}
-        {isVisible ? (
           <IconButton size='small' onClick={handleDeleteNote}>
             <Delete fontSize='small' sx={ICON_SX} />
           </IconButton>
-        ) : null}
-      </StyledNoteListItemHeader>
-      <Stack direction='row' spacing={1}>
-        <Box flex='1 1 auto'>{note.content}</Box>
-      </Stack>
-    </StyledNoteListItem>
+        </StyledNoteListItemHeader>
+        <Typography variant='body2'> {note.content}</Typography>
+      </StyledNoteListItem>
+    </Grid>
   )
 })

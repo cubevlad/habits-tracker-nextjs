@@ -19,7 +19,7 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { accessToken, refreshToken } = await userController.singIn({ name, password })
 
-    setCookie(res, 'jwt', refreshToken, {
+    setCookie(res, 'refreshToken', refreshToken, {
       httpOnly: true,
       secure: false,
       maxAge: 24 * 60 * 60 * 1000,

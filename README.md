@@ -2,15 +2,8 @@
 
 ## backend
 
-- [ ] add route / user with admin role
-- [ ] middlewares
-- [ ] cors + helmet
-
-refactoring:
-
-- [ ] routes -> move to services/controllers
-- [ ] add error handling
-- [ ] make code mode readable
+- [ ] fix redirecting to login page
+- [ ] fix token refresh
 
 ## frontend
 

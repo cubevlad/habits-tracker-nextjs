@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { accessToken, refreshToken } = await userController.refresh(req)
 
     res.status(200)
-    setCookie(res, 'jwt', refreshToken, {
+    setCookie(res, 'refreshToken', refreshToken, {
       httpOnly: true,
       secure: false,
       maxAge: 24 * 60 * 60 * 1000,
@@ -16,9 +16,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.send({ accessToken, refreshToken })
   } catch (error) {
-    removeCookie(res, 'jwt')
-    res.redirect('/login')
+    removeCookie(res, 'refreshToken')
 
-    return res.status(403).json({ message: error.message })
+    return res.status(401).json({ message: error.message })
   }
 }

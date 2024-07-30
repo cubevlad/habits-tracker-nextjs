@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material'
+import { Box, Grid, Stack, Typography } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 
 import type { Note } from '@shared/types'
@@ -14,11 +14,13 @@ export const NotesList: React.FC<NotesListProps> = observer(({ notes }) => {
     <Stack spacing={1}>
       <Typography variant='h6'>Заметки</Typography>
       {!notes.length ? <Typography variant='body1'>Нет заметок</Typography> : null}
-      <Stack spacing={2}>
-        {notes.map((note) => (
-          <NoteListItem key={note.id} note={note} />
-        ))}
-      </Stack>
+      <Box sx={{ width: '100%' }}>
+        <Grid container columns={{ xs: 4, sm: 8, md: 12 }} spacing={{ xs: 2, md: 3 }}>
+          {notes.map((note) => (
+            <NoteListItem key={note.id} note={note} />
+          ))}
+        </Grid>
+      </Box>
     </Stack>
   )
 })

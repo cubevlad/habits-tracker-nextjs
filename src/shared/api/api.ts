@@ -3,7 +3,7 @@ import EventEmitter from 'events'
 import type { AxiosInstance, CreateAxiosDefaults } from 'axios'
 import axios from 'axios'
 
-import { tokenInterceptor } from './lib'
+import { setAccessToken, tokenInterceptor } from './lib'
 import { HabitsService, NotesService, UserService } from './model'
 
 class Api extends EventEmitter {
@@ -35,20 +35,18 @@ class Api extends EventEmitter {
     let isRefreshing = false
     this.instance.interceptors.response.use(
       (response) => response,
-      (error) => {
+      async (error) => {
         const originalRequest = error.config
 
         if (error.response.status === 401) {
           if (!isRefreshing) {
             isRefreshing = true
 
-            // TODO: проверить работоспособность
-            this.instance.get('/user/refresh').then(({ data }) => {
-              const { access_token } = data
-              if (axios.defaults.headers) {
-                axios.defaults.headers.common.Authorization = `Bearer ${access_token}`
-              }
-            })
+            const data = await this.instance.get('/user/refresh')
+            if (axios.defaults.headers) {
+              setAccessToken(data.data.accessToken)
+              axios.defaults.headers.common.Authorization = `Bearer ${data.data.accessToken}`
+            }
 
             return this.instance(originalRequest)
           }
