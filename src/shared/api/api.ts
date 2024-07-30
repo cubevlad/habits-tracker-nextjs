@@ -13,6 +13,8 @@ class Api extends EventEmitter {
     'Content-Type': 'application/json;charset=UTF-8',
   }
 
+  static excludeRoutes = ['/refresh', '/login', '/logout']
+
   private readonly instance: AxiosInstance
 
   public userService: UserService
@@ -37,11 +39,18 @@ class Api extends EventEmitter {
       (response) => response,
       async (error) => {
         const originalRequest = error.config
+
+        const { url } = error.config
+
         if (!isRefreshing) {
           isRefreshing = true
         }
 
         try {
+          if (Api.excludeRoutes.includes(url)) {
+            return await this.instance(originalRequest)
+          }
+
           const response = await this.instance.get('/user/refresh')
           const newAccessToken = response.data.accessToken
 

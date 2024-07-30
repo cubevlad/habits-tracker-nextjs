@@ -11,6 +11,7 @@
 - [ ] change colors to theme palette
 - [ ] responsive design
 - [ ] detect device
+- [ ] add 404 page with redirecting to /
 
 - [ ] add account info
 - [ ] refresh token if expired
