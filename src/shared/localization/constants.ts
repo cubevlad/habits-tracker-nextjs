@@ -1,4 +1,3 @@
-// @ts-expect-error
 import buildLocalizeFn from 'date-fns/locale/_lib/buildLocalizeFn'
 
 export const RU_MONTH = {
