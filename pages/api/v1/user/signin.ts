@@ -1,9 +1,15 @@
+import cors from 'cors'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { createRouter } from 'next-connect'
 
 import { userController } from 'controllers/userController'
 import { setCookie } from 'lib/cookies'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+const router = createRouter<NextApiRequest, NextApiResponse>()
+
+router.use(cors())
+
+router.post(async (req: NextApiRequest, res: NextApiResponse) => {
   const { name, password } = req.body
 
   if (!name || !password) {
@@ -23,4 +29,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } catch (error) {
     return res.status(400).json({ message: error.message })
   }
-}
+})
+
+export default router.handler()
