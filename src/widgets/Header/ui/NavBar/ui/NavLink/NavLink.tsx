@@ -4,10 +4,8 @@ import { useAuthCtx, useThemeCtx } from '@shared/context'
 
 import { useLinkState } from './lib'
 
-import type { LinksMapValue } from '../../model'
-
 type NavLinkProps = {
-  to: LinksMapValue
+  to: string
   getIcon: (buttonState: number) => React.ReactNode
   isDisabled?: boolean
 }

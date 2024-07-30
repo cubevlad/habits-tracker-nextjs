@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router'
 
 import { BUTTON_STATE } from '../../../lib'
-import type { LinksMapValue } from '../../../model'
 
 type UseButtonStateHookProps = {
   isDisabled: boolean
   mode: 'dark' | 'light'
-  to: LinksMapValue
+  to: string
 }
 
 const getState = (state: number) => {
