@@ -1,5 +1,7 @@
 import { useMediaQuery } from '@mui/material'
 
+import type { MatchMedia } from '@shared/types'
+
 /**
  * A custom hook that provides media query match information for different screen sizes.
  * It uses the `useMediaQuery` hook to determine whether the viewport matches specific
@@ -21,7 +23,7 @@ import { useMediaQuery } from '@mui/material'
  *   // Do something for XL screens
  * }
  */
-export const useMatchMedia = () => {
+export const useMatchMedia = (): MatchMedia => {
   const isXXl = useMediaQuery('(min-width: 1537px)')
   const isXl = useMediaQuery('(min-width: 1201px) and (max-width: 1536px)')
   const isLg = useMediaQuery('(min-width: 901px) and (max-width: 1200px)')

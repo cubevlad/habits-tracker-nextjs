@@ -17,7 +17,9 @@ export const TableHeader = observer(<T extends Base>({ list }: ColgroupProps<T>)
   return (
     <StyledTableHeader>
       <StyledTableRow>
-        <StyledTableTh rowSpan={2}>Привычки</StyledTableTh>
+        <StyledTableTh align='center' colSpan={1} rowSpan={2}>
+          Привычки
+        </StyledTableTh>
         {list.map(({ id, shortWeekDayName, isCurrent }) => (
           <StyledTableTh key={id} $isCurrent={isCurrent}>
             {shortWeekDayName}

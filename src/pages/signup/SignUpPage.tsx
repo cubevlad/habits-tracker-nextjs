@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { TextField } from '@mui/material'
@@ -8,7 +8,9 @@ import { useForm, FormProvider } from 'react-hook-form'
 
 import { api } from '@shared/api'
 import { useAuthCtx } from '@shared/context'
-import { StyledForm, StyledFormWrapper, StyledSubmitButton, StyledTitle } from '@styles'
+import { useStatusCallback } from '@shared/lib'
+import { LoadingButton } from '@shared/ui'
+import { StyledForm, StyledFormWrapper, StyledTitle } from '@styles'
 
 import { signUpSchema, type SingUpForm } from './model'
 
@@ -30,7 +32,7 @@ const SignUpPage: React.FC = () => {
     setError,
   } = methods
 
-  const handleSubmitForm = useCallback(
+  const { isPending, wrappedCallback: handleSubmitForm } = useStatusCallback(
     async (user: SingUpForm) => {
       try {
         const resp = await api.userService.user.signUp({ ...user })
@@ -42,8 +44,7 @@ const SignUpPage: React.FC = () => {
           setError('password', { message: error.response?.data.message })
         }
       }
-    },
-    [setError, handleLogin]
+    }
   )
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const SignUpPage: React.FC = () => {
 
   return (
     <FormProvider {...methods}>
-      <StyledFormWrapper>
+      <StyledFormWrapper sx={{ alignItems: 'center', gap: 2 }}>
         <StyledTitle variant='h4'> Регистрация </StyledTitle>
         <StyledForm spacing={4}>
           <TextField
@@ -79,15 +80,16 @@ const SignUpPage: React.FC = () => {
             label='Почта'
             variant='outlined'
           />
-          <StyledSubmitButton
+          <LoadingButton
             disabled={!isValid}
+            isLoading={isPending}
             sx={{ mt: 2 }}
             type='button'
             variant='outlined'
             onClick={handleSubmit(handleSubmitForm)}
           >
             Загеристрироваться
-          </StyledSubmitButton>
+          </LoadingButton>
         </StyledForm>
         <Link href='/login' style={{ color: 'unset' }}>
           Вернуться на страницу входа

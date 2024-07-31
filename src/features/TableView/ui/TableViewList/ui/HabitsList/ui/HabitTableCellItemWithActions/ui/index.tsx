@@ -1,10 +1,10 @@
-import { Stack } from '@mui/material'
+import { Button, Stack } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 
 import { useStore } from '@shared/context'
 import { useStatusCallback } from '@shared/lib'
 import { LoadingButton } from '@shared/ui'
-import { StyledFormWrapper, StyledTitle, StyledSubmitButton } from '@styles'
+import { StyledFormWrapper, StyledTitle } from '@styles'
 
 type DeleteModalContentProps = {
   id: string
@@ -25,12 +25,14 @@ export const DeleteModalContent: React.FC<DeleteModalContentProps> = observer(({
   )
 
   return (
-    <StyledFormWrapper borderRadius={8} maxWidth={520} p={4}>
+    <StyledFormWrapper
+      sx={{ maxWidth: '600px', height: '200px', alignItems: 'center', justifyContent: 'center' }}
+    >
       <StyledTitle variant='h4'>Удалить привычку?</StyledTitle>
       <Stack direction='row' spacing={2}>
-        <StyledSubmitButton variant='contained' onClick={onClose}>
+        <Button variant='outlined' onClick={onClose}>
           Нет
-        </StyledSubmitButton>
+        </Button>
         <LoadingButton isLoading={isPending} variant='outlined' onClick={handleDelete}>
           Да
         </LoadingButton>

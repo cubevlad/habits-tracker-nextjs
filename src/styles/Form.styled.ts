@@ -8,8 +8,8 @@ export const StyledFormWrapper = styled(Box)`
   background-color: ${({ theme }) => theme.palette.background.paper};
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
+  padding: 0 2rem;
 `
 
 export const StyledTitle = styled(Typography)`
@@ -17,15 +17,15 @@ export const StyledTitle = styled(Typography)`
 `
 
 export const StyledForm = styled(Stack)`
-  padding: 40px;
-  border: 1px solid ${({ theme }) => theme.palette.primary.main};
   border-radius: 8px;
   width: 100%;
+  max-width: 600px;
+  align-items: center;
 `
 
 export const StyledSubmitButton = styled(Button)`
   background-color: ${({ theme }) => theme.palette.primary.main};
-  color: ${({ theme }) => theme.palette.text.primary};
+  color: ${({ theme }) => theme.palette.text.secondary};
 
   &.Mui-disabled {
     background-color: ${({ theme }) => theme.palette.text.disabled};

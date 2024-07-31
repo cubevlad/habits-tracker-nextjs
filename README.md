@@ -3,18 +3,17 @@
 ## backend
 
 - [ ] fix redirecting to login page
-- [ ] fix token refresh
 
 ## frontend
 
 - [ ] new theme palette
 - [ ] change colors to theme palette
-- [ ] responsive design
-- [ ] detect device
 - [ ] add 404 page with redirecting to /
 
 - [ ] add account info
-- [ ] refresh token if expired
+- [ ] sticky header
+- [ ] sticky left table cell
+- [ ] react-hook-form: validate form if provided edit value doesn't change
 
 - [ ] analytics page ?
 - [ ] settings page ?

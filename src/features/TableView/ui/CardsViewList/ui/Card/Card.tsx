@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite'
 import { flushSync } from 'react-dom'
 
 import { useFormCtx, useStore } from '@shared/context'
-import { useBoolean } from '@shared/lib'
+import { useBoolean, useMatchMedia } from '@shared/lib'
 import type { TableViewItem } from '@shared/types'
 import { Dialog } from '@shared/ui'
 
@@ -15,24 +15,15 @@ import { ItemModalView } from './ui'
 
 type CardProps = {
   item: TableViewItem
-  matchMedia?: {
-    isXXl: boolean
-    isXl: boolean
-    isLg: boolean
-    isSm: boolean
-    isMd: boolean
-  }
 }
 
-export const Card: React.FC<CardProps> = observer(({ item, matchMedia }) => {
+export const Card: React.FC<CardProps> = observer(({ item }) => {
   const {
     notesStore: { getNotesById },
     habitStore: { habits, flatHabitsWithFlatRecordsList },
   } = useStore()
 
-  const isLg = matchMedia?.isLg
-  const isMd = matchMedia?.isMd
-  const isSm = matchMedia?.isSm
+  const { isLg, isMd, isSm } = useMatchMedia()
 
   const {
     NoteForm,
@@ -70,6 +61,7 @@ export const Card: React.FC<CardProps> = observer(({ item, matchMedia }) => {
   const handleItemClick = () => !item.disabled && openDialog()
 
   const cardRef = useRef<HTMLDivElement | null>(null)
+
   const handleCardRef = (element: HTMLDivElement | null) => {
     if (element && item.isCurrent) {
       cardRef.current = element
@@ -81,6 +73,10 @@ export const Card: React.FC<CardProps> = observer(({ item, matchMedia }) => {
 
     cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }, [item.isCurrent, isSm])
+
+  if (isSm && item.disabled) {
+    return null
+  }
 
   return (
     <>

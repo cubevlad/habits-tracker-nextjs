@@ -62,11 +62,12 @@ export const NoteForm = observer(({ note, onClose, createdAt: createdAtProp }: N
 
   return (
     <FormProvider {...methods}>
-      <StyledFormWrapper borderRadius={8} minWidth={520} p={4}>
+      <StyledFormWrapper borderRadius={8}>
         <StyledTitle variant='h4'> {note ? 'Редактирование' : 'Создание'} заметки </StyledTitle>
         <StyledForm spacing={4}>
           <TextField
             {...register('content')}
+            fullWidth
             multiline
             error={!!errors.content}
             helperText={errors.content?.message}

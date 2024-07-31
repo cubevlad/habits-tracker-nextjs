@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { TextField } from '@mui/material'
@@ -8,7 +8,9 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 import { api } from '@shared/api'
 import { useAuthCtx } from '@shared/context'
-import { StyledForm, StyledFormWrapper, StyledSubmitButton, StyledTitle } from '@styles'
+import { useStatusCallback } from '@shared/lib'
+import { LoadingButton } from '@shared/ui'
+import { StyledForm, StyledFormWrapper, StyledTitle } from '@styles'
 
 import { DEFAULT_LOGIN_FORM_VALUES, type LoginForm } from './lib'
 import { loginSchema } from './model'
@@ -29,7 +31,7 @@ const LoginPage: React.FC = () => {
     setError,
   } = methods
 
-  const handleSubmitForm = useCallback(
+  const { isPending, wrappedCallback: handleSubmitForm } = useStatusCallback(
     async (user: LoginForm) => {
       try {
         const resp = await api.userService.user.singIn({ ...user })
@@ -41,8 +43,7 @@ const LoginPage: React.FC = () => {
           setError('password', { message: error.response?.data.message })
         }
       }
-    },
-    [setError, handleLogin]
+    }
   )
 
   useEffect(() => {
@@ -65,7 +66,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <FormProvider {...methods}>
-      <StyledFormWrapper>
+      <StyledFormWrapper sx={{ alignItems: 'center', gap: 2 }}>
         <StyledTitle variant='h4'> Добро пожаловать </StyledTitle>
         <StyledForm spacing={4}>
           <TextField
@@ -84,15 +85,16 @@ const LoginPage: React.FC = () => {
             label='Пароль'
             variant='outlined'
           />
-          <StyledSubmitButton
+          <LoadingButton
             disabled={!isValid}
-            sx={{ mt: 2 }}
+            isLoading={isPending}
+            sx={{ mt: 2, width: '100%', maxWidth: 200 }}
             type='button'
             variant='outlined'
             onClick={handleSubmit(handleSubmitForm)}
           >
             Войти
-          </StyledSubmitButton>
+          </LoadingButton>
         </StyledForm>
         Нет аккаунта?
         <Link href='/signup' style={{ color: 'unset' }}>

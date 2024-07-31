@@ -13,8 +13,8 @@ export const StyledTableWrapper = styled('div')`
   }
 `
 
-export const StyledTable = styled('table')`
-  width: calc(50% + 700px);
+export const StyledTable = styled('table')<{ $width?: number }>`
+  width: ${({ $width }) => ($width ? `calc(100% + ${$width}px)` : '100%')};
   min-width: 100%;
   table-layout: fixed;
   margin-bottom: 24px;

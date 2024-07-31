@@ -3,16 +3,21 @@ import { styled } from '@mui/material'
 
 import { ACHIEVED_COLOR } from '@shared/constants'
 
-export const StyledHabitsCardListItem = styled(Stack)<{ $achieved?: boolean }>`
+export const StyledHabitsCardListItem = styled(Stack)<{ $achieved?: boolean; $disabled?: boolean }>`
   border: ${({ theme }) => `1px solid ${theme.palette.divider}`};
-  background-color: ${({ $achieved, theme }) =>
-    $achieved ? ACHIEVED_COLOR : theme.palette.background.default};
+  background-color: ${({ $achieved, theme, $disabled }) =>
+    // eslint-disable-next-line no-nested-ternary
+    $disabled
+      ? theme.palette.text.disabled
+      : $achieved
+        ? ACHIEVED_COLOR
+        : theme.palette.background.default};
   border-radius: 8px;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  height: 40px;
-  padding: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  position: relative;
 
   &:hover {
     border: ${({ theme }) => `1px solid ${theme.palette.primary.main}`};
@@ -34,6 +39,10 @@ export const StyledIconsWrapper = styled(Stack)`
     & > svg {
       color: ${({ theme }) => theme.palette.text.secondary};
       font-size: 1rem;
+
+      @media screen and (max-width: 600px) {
+        font-size: 1.2rem;
+      }
     }
   }
 

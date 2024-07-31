@@ -1,10 +1,10 @@
 import { Delete, Edit } from '@mui/icons-material'
-import { Box, Typography } from '@mui/material'
+import { Box, CircularProgress, Grid, Typography } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 
 import { DeleteModalContent } from '@features/TableView/ui/TableViewList/ui/HabitsList/ui/HabitTableCellItemWithActions/ui'
 import { useFormCtx, useStore } from '@shared/context'
-import { useModal } from '@shared/lib'
+import { useModal, useStatusCallback } from '@shared/lib'
 import type { Habit, TableViewItem } from '@shared/types'
 
 import { StyledHabitsCardListItem, StyledIconsWrapper } from './HabitsCardListItem.styled'
@@ -23,9 +23,9 @@ export const HabitsCardListItem: React.FC<HabitsCardListItemProps> = observer(({
 
   const currentRecord = flatHabitsWithFlatRecordsList[habit.id][item.habitRecordId]
 
-  const handleCheck = async () => {
+  const { isPending, wrappedCallback: handleCheck } = useStatusCallback(async () => {
     await updateHabitRecord({ ...currentRecord, done: !currentRecord.done })
-  }
+  })
 
   const handleEdit = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     handleHabitsFormOpen(habit)
@@ -40,19 +40,38 @@ export const HabitsCardListItem: React.FC<HabitsCardListItemProps> = observer(({
   }
 
   return (
-    <StyledHabitsCardListItem $achieved={currentRecord.done} direction='row' onClick={handleCheck}>
-      <Typography variant='body1'>{habit.name}</Typography>
-      <StyledIconsWrapper direction='row'>
-        <Box onClick={handleEdit}>
-          <Edit />
-        </Box>
-        <Box onClick={handleOpenDeleteModal}>
-          <Delete />
-        </Box>
-      </StyledIconsWrapper>
-      <Modal>
-        <DeleteModalContent id={habit.id} onClose={handleClose} />
-      </Modal>
-    </StyledHabitsCardListItem>
+    <Grid item xs={12}>
+      <StyledHabitsCardListItem
+        $achieved={currentRecord.done}
+        $disabled={isPending}
+        direction='row'
+        onClick={handleCheck}
+      >
+        <Typography sx={{ wordBreak: 'break-word' }} variant='body1'>
+          {habit.name}
+        </Typography>
+        {isPending ? (
+          <CircularProgress
+            color='inherit'
+            size={24}
+            sx={{
+              position: 'absolute',
+              left: '50%',
+            }}
+          />
+        ) : null}
+        <StyledIconsWrapper direction='row'>
+          <Box onClick={handleEdit}>
+            <Edit />
+          </Box>
+          <Box onClick={handleOpenDeleteModal}>
+            <Delete />
+          </Box>
+        </StyledIconsWrapper>
+        <Modal>
+          <DeleteModalContent id={habit.id} onClose={handleClose} />
+        </Modal>
+      </StyledHabitsCardListItem>
+    </Grid>
   )
 })

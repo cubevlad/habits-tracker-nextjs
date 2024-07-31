@@ -3,11 +3,14 @@ import { observer } from 'mobx-react-lite'
 
 import { BUTTON_STYLES } from '@shared/constants'
 import { useFormCtx, useStore } from '@shared/context'
-import type { TableViewItem } from '@shared/types'
+import { useMatchMedia } from '@shared/lib'
+import type { MatchMedia, TableViewItem } from '@shared/types'
 import { Dialog, Notes } from '@shared/ui'
 import { StyledTableWrapper, StyledTable } from '@styles'
 
 import { TableHeader, TableBody, Colgroup } from './ui'
+
+import { TABLE_BREAKPOINTS } from '../../lib'
 
 type TableViewListProps = {
   list: TableViewItem[]
@@ -42,10 +45,15 @@ export const TableViewList: React.FC<TableViewListProps> = observer(({ list }) =
     handleNoteFormClose()
   }
 
+  const matchMedia = useMatchMedia()
+
+  const key = Object.keys(matchMedia).find((breakpoint) => !!matchMedia[breakpoint])
+  const tableWidth = TABLE_BREAKPOINTS[key as keyof MatchMedia]
+
   return (
     <>
       <StyledTableWrapper>
-        <StyledTable>
+        <StyledTable $width={tableWidth}>
           <Colgroup list={list} />
           <TableHeader list={list} />
           <TableBody habits={habits} list={list} />

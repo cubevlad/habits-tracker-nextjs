@@ -26,7 +26,7 @@ export const HabitForm: React.FC<HabitFormProps> = observer(({ habit: habitProp,
   } = useStore()
 
   const methods = useForm<HabitFormType>({
-    defaultValues: { ...DEFAULT_HABIT_FORM_VALUES },
+    defaultValues: DEFAULT_HABIT_FORM_VALUES,
     mode: 'all',
     resolver: yupResolver(habitSchema),
   })
@@ -52,13 +52,16 @@ export const HabitForm: React.FC<HabitFormProps> = observer(({ habit: habitProp,
 
   useLayoutEffect(() => {
     if (habitProp) {
-      reset(habitProp)
+      reset({
+        name: habitProp.name,
+        goal: habitProp.goal,
+      })
     }
   }, [habitProp, reset])
 
   return (
     <FormProvider {...methods}>
-      <StyledFormWrapper borderRadius={8} minWidth={520} p={4}>
+      <StyledFormWrapper borderRadius={8} p={4}>
         <StyledTitle variant='h4'>
           {habitProp ? 'Редактирование привычки' : 'Создание привычки'}
         </StyledTitle>
@@ -66,9 +69,11 @@ export const HabitForm: React.FC<HabitFormProps> = observer(({ habit: habitProp,
           <TextField
             {...register('name')}
             fullWidth
+            multiline
             error={!isValid && !!errors.name?.message}
             helperText={errors.name?.message}
             label='Имя'
+            maxRows={3}
             variant='outlined'
           />
           <TextField
