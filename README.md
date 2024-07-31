@@ -14,6 +14,7 @@
 - [ ] sticky header
 - [ ] sticky left table cell
 - [ ] react-hook-form: validate form if provided edit value doesn't change
+- [ ] add loading state when use MonthNavigator and change state
 
 - [ ] analytics page ?
 - [ ] settings page ?
