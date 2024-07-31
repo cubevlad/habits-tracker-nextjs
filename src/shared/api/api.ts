@@ -32,24 +32,35 @@ class Api extends EventEmitter {
 
     this.instance.interceptors.request.use((cfg) => tokenInterceptor(cfg))
 
+    let isRefreshing = false
+    const pool: any[] = []
+
     this.instance.interceptors.response.use(
       (response) => response,
       async (error) => {
         const originalRequest = error.config
 
         if (error.response.status === 401) {
-          try {
-            const response = await this.instance.get('/user/refresh')
-            const newAccessToken = response.data.accessToken
+          pool.push(originalRequest)
 
-            if (newAccessToken) {
-              setAccessToken(newAccessToken)
-              this.instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`
-              return await this.instance(originalRequest)
+          if (!isRefreshing) {
+            isRefreshing = true
+
+            try {
+              const response = await this.instance.get('/user/refresh')
+              pool.shift()
+              const newAccessToken = response.data.accessToken
+
+              if (newAccessToken) {
+                setAccessToken(newAccessToken)
+                this.instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`
+                await this.instance(originalRequest)
+                return await Promise.all(pool.map((request) => this.instance(request)))
+              }
+            } catch (refreshError) {
+              this.emit('refreshError', refreshError)
+              return Promise.reject(refreshError)
             }
-          } catch (refreshError) {
-            this.emit('apiError', refreshError)
-            return Promise.reject(refreshError)
           }
         }
 

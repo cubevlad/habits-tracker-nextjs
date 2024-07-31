@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 
 import { useRouter } from 'next/router'
 
+import { api } from '@shared/api'
 import { AuthContextProvider } from '@shared/context'
 
 const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
@@ -54,6 +55,14 @@ const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
     setIsAuth(true)
     router.replace('/')
   }, [router])
+
+  useEffect(() => {
+    api.on('refreshError', handleLogout)
+
+    return () => {
+      api.off('refreshError', handleLogout)
+    }
+  }, [handleLogout])
 
   const contextValue = useMemo(
     () => ({
