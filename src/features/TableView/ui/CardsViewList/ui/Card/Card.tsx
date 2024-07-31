@@ -94,8 +94,8 @@ export const Card: React.FC<CardProps> = observer(({ item }) => {
               <Typography>{dayName}</Typography>
             </Stack>
             <Stack alignItems='center' direction='row' justifyContent='space-between'>
-              {habitsLength ? <StyledChip color='primary' /> : <span />}
-              {notesLength ? <StyledChip color='secondary' /> : <span />}
+              {habitsLength ? <StyledChip $key='habit' color='primary' /> : <span />}
+              {notesLength ? <StyledChip $key='note' /> : <span />}
             </Stack>
           </Stack>
         )}

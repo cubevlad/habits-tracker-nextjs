@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import { TextField } from '@mui/material'
+import { Stack, TextField, Typography } from '@mui/material'
 import { AxiosError } from 'axios'
 import Link from 'next/link'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -68,7 +68,7 @@ const LoginPage: React.FC = () => {
     <FormProvider {...methods}>
       <StyledFormWrapper sx={{ alignItems: 'center', gap: 2 }}>
         <StyledTitle variant='h4'> Добро пожаловать </StyledTitle>
-        <StyledForm spacing={4}>
+        <StyledForm mb={4} spacing={4}>
           <TextField
             {...register('name')}
             fullWidth
@@ -96,10 +96,12 @@ const LoginPage: React.FC = () => {
             Войти
           </LoadingButton>
         </StyledForm>
-        Нет аккаунта?
-        <Link href='/signup' style={{ color: 'unset' }}>
-          Зарегистрируйтесь
-        </Link>
+        <Stack direction='row' spacing={2}>
+          <Typography variant='body1'>Нет аккаунта?</Typography>
+          <Link href='/signup' style={{ color: 'unset' }}>
+            <Typography variant='body1'>Зарегистрируйтесь</Typography>
+          </Link>
+        </Stack>
       </StyledFormWrapper>
     </FormProvider>
   )

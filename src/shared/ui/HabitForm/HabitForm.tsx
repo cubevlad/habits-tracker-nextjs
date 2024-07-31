@@ -61,7 +61,7 @@ export const HabitForm: React.FC<HabitFormProps> = observer(({ habit: habitProp,
 
   return (
     <FormProvider {...methods}>
-      <StyledFormWrapper borderRadius={8} p={4}>
+      <StyledFormWrapper p={4}>
         <StyledTitle variant='h4'>
           {habitProp ? 'Редактирование привычки' : 'Создание привычки'}
         </StyledTitle>

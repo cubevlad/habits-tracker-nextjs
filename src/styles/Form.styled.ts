@@ -5,7 +5,6 @@ export const StyledFormWrapper = styled(Box)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: ${({ theme }) => theme.palette.background.paper};
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -24,10 +23,10 @@ export const StyledForm = styled(Stack)`
 `
 
 export const StyledSubmitButton = styled(Button)`
-  background-color: ${({ theme }) => theme.palette.primary.main};
-  color: ${({ theme }) => theme.palette.text.secondary};
+  color: ${({ theme }) => theme.palette.text.primary};
+  border-color: ${({ theme }) => theme.palette.text.primary};
 
   &.Mui-disabled {
-    background-color: ${({ theme }) => theme.palette.text.disabled};
+    color: ${({ theme }) => theme.palette.text.disabled};
   }
 `

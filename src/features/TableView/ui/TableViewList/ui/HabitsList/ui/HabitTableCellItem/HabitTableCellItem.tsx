@@ -44,7 +44,7 @@ export const HabitTableCellItem: React.FC<HabitTableCellItemProps> = observer(
               transform: 'translate(-50%, -50%)',
             }}
           >
-            <CircularProgress color='inherit' size={12} />
+            <CircularProgress color='primary' size={12} />
           </Box>
         ) : null}
         {record.done ? (

@@ -88,7 +88,16 @@ export const Dialog: React.FC<DialogProps> = ({
           </IconButton>
         </Stack>
       </DialogTitle>
-      <DialogContent dividers>{children}</DialogContent>
+      <DialogContent
+        dividers
+        sx={{
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        }}
+      >
+        {children}
+      </DialogContent>
       {hideDialogActions ? null : (
         <DialogActions>
           {customDialogActions ?? (

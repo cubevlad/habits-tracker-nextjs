@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import { TextField } from '@mui/material'
+import { TextField, Typography } from '@mui/material'
 import { AxiosError } from 'axios'
 import Link from 'next/link'
 import { useForm, FormProvider } from 'react-hook-form'
@@ -88,11 +88,11 @@ const SignUpPage: React.FC = () => {
             variant='outlined'
             onClick={handleSubmit(handleSubmitForm)}
           >
-            Загеристрироваться
+            Зарегистрироваться
           </LoadingButton>
         </StyledForm>
         <Link href='/login' style={{ color: 'unset' }}>
-          Вернуться на страницу входа
+          <Typography variant='body1'>Вернуться на страницу входа</Typography>
         </Link>
       </StyledFormWrapper>
     </FormProvider>

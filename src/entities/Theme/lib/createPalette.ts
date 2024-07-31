@@ -1,136 +1,69 @@
-import type { PaletteMode } from '@mui/material'
+import type { ExtendedPaletteOptions } from '@shared/types'
 
-const black = '#1a1c1e'
-const white = '#fff'
-
-export const createPaletteV1 = (mode: PaletteMode = 'light') => {
-  const isLightMode = mode === 'light'
-
+export const createLightTheme = (): ExtendedPaletteOptions => {
   return {
-    mode,
-    common: {
-      black,
-      white,
-    },
-
-    error: {
-      contrastText: white,
-      dark: '#7e2b17',
-      light: '#d55b3c',
-      main: '#d04826',
-    },
-
-    info: {
-      contrastText: white,
-      dark: '#04617e',
-      light: '#1faad6',
-      main: '#05a0d1',
-    },
-
+    mode: 'light',
     primary: {
-      contrastText: white,
-      dark: '#31437b',
-      light: '#637fd2',
-      main: '#506fcc',
-    },
-
-    secondary: {
-      contrastText: white,
-      dark: '#7a2655',
-      light: '#d05398',
-      main: '#ca3f8c',
-    },
-
-    success: {
-      contrastText: white,
-      dark: '#1a520d',
-      light: '#469732',
-      main: '#2b8814',
-    },
-
-    text: {
-      disabled: isLightMode ? 'rgba(26, 28, 30, 0.43)' : 'rgba(255, 255, 255, 0.5)',
-      primary: isLightMode ? 'rgba(26, 28, 30, 0.97)' : white,
-      secondary: isLightMode ? 'rgba(26, 28, 30, 0.75)' : 'rgba(255, 255, 255, 0.7)',
-    },
-
-    warning: {
-      contrastText: white,
-      dark: '#874a05',
-      light: '#e38821',
-      main: '#df7a07',
-    },
-  }
-}
-
-export const createPaletteV2 = (mode: PaletteMode = 'light') => {
-  return {
-    mode,
-    common: {
-      black,
-      white,
-    },
-
-    primary: {
-      main: '#0de0a1', // Achieved color
+      main: '#1e81b0',
     },
     secondary: {
-      main: '#506488', // Dark blue (alternative secondary color)
-    },
-    error: {
-      main: '#8c4b4b', // Dark red
-      light: '#f2b8b8', // Light red
-    },
-    warning: {
-      main: '#8c704a', // Dark yellow
-      light: '#ffd6a5', // Light apricot
-    },
-    info: {
-      main: '#4b5975', // Dark ice blue
-      light: '#d8d2e7', // Light purple
-    },
-    success: {
-      main: '#517a51', // Dark mint green
-      light: '#c3e8c2', // Light mint green
+      main: '#424242',
     },
     background: {
-      default: '#fdf2d0', // Light yellow
-      paper: '#ffffff', // White
+      default: '#f8f8f8',
+      paper: '#f8f8f8',
     },
     text: {
-      primary: '#333333', // Dark text
-      secondary: '#666666', // Slightly lighter dark text
+      primary: '#1a1c1e',
+      secondary: '#32393f',
+      disabled: '#89949c',
     },
-    action: {
-      active: '#0de0a1', // Achieved color for active elements
-      hover: '#c3e8c2', // Light mint green for hover
-      selected: '#bfdfce', // Light green for selected
-      disabled: '#d8d2e7', // Light purple for disabled
-      disabledBackground: '#f9ddde', // Light salmon for disabled background
+    info: {
+      main: 'rgb(30, 129, 176, 0.2)',
     },
-    button: {
-      primary: {
-        main: '#0de0a1', // Achieved color
-        contrastText: '#ffffff', // White text
-      },
-      secondary: {
-        main: '#506488', // Dark blue
-        contrastText: '#ffffff', // White text
-      },
+    divider: '#cdcdcd',
+    border: '#873e23',
+    chip: {
+      habit: '#1e81b0',
+      note: '#e28743',
+    },
+    shadow: {
+      y: '0px 5px 10px 2px rgba(34, 60, 80, 0.2)',
+      x: '-14px 0px 13px -11px rgba(34, 60, 80, 0.17) inset',
     },
   }
 }
 
-export const createPalette = (mode: PaletteMode = 'light', type: 'v1' | 'v2') => {
-  switch (type) {
-    case 'v1': {
-      return createPaletteV1(mode)
-    }
-    case 'v2': {
-      return createPaletteV2(mode)
-    }
-    default: {
-      return createPaletteV1(mode)
-    }
+export const createDarkTheme = (): ExtendedPaletteOptions => {
+  return {
+    mode: 'dark',
+    primary: {
+      main: '#a166ff',
+    },
+    secondary: {
+      main: '#b0bec5',
+    },
+    background: {
+      default: '#373747',
+      paper: '#232635',
+    },
+    text: {
+      primary: '#cdcdcd',
+      secondary: '#b9bec3',
+      disabled: '#89949c',
+    },
+    info: {
+      main: 'rgb(161, 102, 255, 0.2)',
+    },
+    divider: '#8998A5',
+    border: '#e28743',
+    chip: {
+      habit: '#a166ff',
+      note: '#eab676',
+    },
+    shadow: {
+      y: '0px 5px 10px 2px rgba(0, 0, 0, 0.2)',
+      x: '-14px 0px 13px -11px rgba(0, 0, 0, 0.17) inset',
+    },
   }
 }

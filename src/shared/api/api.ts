@@ -13,8 +13,6 @@ class Api extends EventEmitter {
     'Content-Type': 'application/json;charset=UTF-8',
   }
 
-  static excludeRoutes = ['/refresh', '/login', '/logout']
-
   private readonly instance: AxiosInstance
 
   public userService: UserService
@@ -34,35 +32,25 @@ class Api extends EventEmitter {
 
     this.instance.interceptors.request.use((cfg) => tokenInterceptor(cfg))
 
-    let isRefreshing = false
     this.instance.interceptors.response.use(
       (response) => response,
       async (error) => {
         const originalRequest = error.config
 
-        const { url } = error.config
+        if (error.response.status === 401) {
+          try {
+            const response = await this.instance.get('/user/refresh')
+            const newAccessToken = response.data.accessToken
 
-        if (!isRefreshing) {
-          isRefreshing = true
-        }
-
-        try {
-          if (Api.excludeRoutes.includes(url)) {
-            return await this.instance(originalRequest)
+            if (newAccessToken) {
+              setAccessToken(newAccessToken)
+              this.instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`
+              return await this.instance(originalRequest)
+            }
+          } catch (refreshError) {
+            this.emit('apiError', refreshError)
+            return Promise.reject(refreshError)
           }
-
-          const response = await this.instance.get('/user/refresh')
-          const newAccessToken = response.data.accessToken
-
-          if (newAccessToken) {
-            setAccessToken(newAccessToken)
-            this.instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`
-            isRefreshing = false
-            return await this.instance(originalRequest)
-          }
-        } catch (refreshError) {
-          this.emit('apiError', refreshError)
-          return Promise.reject(refreshError)
         }
 
         this.emit('apiError', error)

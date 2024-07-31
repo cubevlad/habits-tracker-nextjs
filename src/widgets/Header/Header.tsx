@@ -3,24 +3,23 @@ import { useRef } from 'react'
 import { ArrowUpward } from '@mui/icons-material'
 import { IconButton } from '@mui/material'
 
-import { useOnScreen } from '@shared/lib'
+import { useStickyElementStatus } from '@shared/lib'
 
 import { StyledHeader } from './Header.styled'
 import { NavBar } from './ui'
 
 export const Header: React.FC = () => {
   const headerRef = useRef<HTMLDivElement | null>(null)
-  const isOnScreen = useOnScreen(headerRef)
+  const isSticky = useStickyElementStatus('Y')
 
-  const handleClick = () =>
-    headerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const handleClick = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   return (
     <>
-      <StyledHeader ref={headerRef}>
+      <StyledHeader ref={headerRef} $isSticky={isSticky}>
         <NavBar />
       </StyledHeader>
-      {isOnScreen ? null : (
+      {!isSticky ? null : (
         <IconButton
           sx={{
             position: 'fixed',

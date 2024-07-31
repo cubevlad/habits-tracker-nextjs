@@ -1,4 +1,4 @@
-import { styled } from '@mui/material'
+import { styled } from '@shared/lib'
 
 const border = '1px solid #e0e0e0'
 
@@ -13,11 +13,31 @@ export const StyledTableWrapper = styled('div')`
   }
 `
 
-export const StyledTable = styled('table')<{ $width?: number }>`
+export const StyledTable = styled('table')<{ $width?: number; $isSticky?: boolean }>`
   width: ${({ $width }) => ($width ? `calc(100% + ${$width}px)` : '100%')};
   min-width: 100%;
   table-layout: fixed;
   margin-bottom: 24px;
+
+  & thead tr th.sticky-col {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: ${({ theme }) => theme.palette.background.default};
+
+    ${({ $isSticky, theme }) => ($isSticky ? `box-shadow: ${theme.palette?.shadow?.x}` : undefined)}
+  }
+
+  & tbody tr td.sticky-col {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: ${({ theme }) => theme.palette.background.default};
+
+    ${({ $isSticky, theme }) => ($isSticky ? `box-shadow: ${theme.palette?.shadow?.x}` : undefined)}
+  }
 `
 
 export const StyledTableHeader = styled('thead')`
@@ -42,7 +62,7 @@ export const StyledTableRow = styled('tr')`
   border-color: inherit;
 `
 
-export const StyledTableTd = styled('td')<{ $color?: string }>`
+export const StyledTableTd = styled('td')<{ $color?: string; $isAchieved?: boolean }>`
   text-align: center;
   padding: 8px;
   border: ${border};
@@ -51,30 +71,14 @@ export const StyledTableTd = styled('td')<{ $color?: string }>`
   unicode-bidi: isolate;
   overflow-wrap: break-word;
   position: relative;
-  background-color: ${({ $color }) => $color ?? 'unset'};
+  background-color: ${({ $color, $isAchieved, theme }) =>
+    $color || ($isAchieved ? theme.palette.primary.main : 'unset')};
 `
 
 export const StyledTableTh = styled('th')<{ $isCurrent?: boolean }>`
   text-align: center;
   padding: 14px 4px !important;
   border: ${border};
-  background-color: ${({
-    $isCurrent,
-    theme: {
-      palette: { mode, text },
-    },
-  }) => {
-    switch (mode) {
-      case 'light': {
-        return $isCurrent ? text.disabled : 'unset'
-      }
-      case 'dark': {
-        return $isCurrent ? text.secondary : 'unset'
-      }
-
-      default: {
-        return 'unset'
-      }
-    }
-  }};
+  background-color: ${({ $isCurrent, theme }) =>
+    $isCurrent ? theme.palette.primary.main : 'unset'};
 `

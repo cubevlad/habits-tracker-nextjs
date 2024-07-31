@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+
 import { Button, Stack, Typography } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 
@@ -8,6 +10,7 @@ import type { MatchMedia, TableViewItem } from '@shared/types'
 import { Dialog, Notes } from '@shared/ui'
 import { StyledTableWrapper, StyledTable } from '@styles'
 
+import { useTableScroll } from './lib'
 import { TableHeader, TableBody, Colgroup } from './ui'
 
 import { TABLE_BREAKPOINTS } from '../../lib'
@@ -50,10 +53,13 @@ export const TableViewList: React.FC<TableViewListProps> = observer(({ list }) =
   const key = Object.keys(matchMedia).find((breakpoint) => !!matchMedia[breakpoint])
   const tableWidth = TABLE_BREAKPOINTS[key as keyof MatchMedia]
 
+  const tableRef = useRef<HTMLDivElement | null>(null)
+  const isSticky = useTableScroll(tableRef)
+
   return (
     <>
-      <StyledTableWrapper>
-        <StyledTable $width={tableWidth}>
+      <StyledTableWrapper ref={tableRef}>
+        <StyledTable $isSticky={isSticky} $width={tableWidth}>
           <Colgroup list={list} />
           <TableHeader list={list} />
           <TableBody habits={habits} list={list} />

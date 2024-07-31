@@ -6,7 +6,7 @@ export const StyledCardsViewWrapper = styled('div')`
   height: 100%;
   width: 100%;
   border-radius: 8px;
-  border: 2px solid #ccc;
+  border: ${({ theme }) => `1px solid ${theme.palette.divider}`};
 
   @media screen and (min-width: 1450px) {
     width: 1440px;

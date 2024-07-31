@@ -18,10 +18,10 @@ const getColor = (theme: Theme, state: number) => {
       return theme.palette.text.disabled
     }
     case 2: {
-      return theme.palette.primary.light
+      return theme.palette.secondary.main
     }
     case 4: {
-      return theme.palette.primary.dark
+      return theme.palette.secondary.main
     }
     case 8: {
       return theme.palette.warning.main
@@ -34,7 +34,7 @@ const getColor = (theme: Theme, state: number) => {
     }
 
     default: {
-      return theme.palette.primary.main
+      return theme.palette.text.primary
     }
   }
 }

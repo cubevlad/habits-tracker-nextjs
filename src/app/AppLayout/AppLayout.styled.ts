@@ -1,7 +1,6 @@
 import { Stack, Box, styled } from '@mui/material'
 
 export const StyledWrapper = styled(Stack)`
-  overflow: auto;
   min-height: 100vh;
 
   & > * {

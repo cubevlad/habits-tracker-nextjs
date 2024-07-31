@@ -9,7 +9,7 @@ export const ThemeToggler: React.FC = () => {
 
   return (
     <IconButton disableRipple size='small' onClick={handleToggleColorMode}>
-      {isLightMode ? <DarkMode color='primary' /> : <LightMode sx={{ color: 'yellow' }} />}
+      {isLightMode ? <DarkMode /> : <LightMode />}
     </IconButton>
   )
 }

@@ -52,7 +52,7 @@ export const HabitsCardListItem: React.FC<HabitsCardListItemProps> = observer(({
         </Typography>
         {isPending ? (
           <CircularProgress
-            color='inherit'
+            color='primary'
             size={24}
             sx={{
               position: 'absolute',

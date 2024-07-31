@@ -1,8 +1,6 @@
 import { Stack } from '@mui/material'
 import { styled } from '@mui/material'
 
-import { ACHIEVED_COLOR } from '@shared/constants'
-
 export const StyledHabitsCardListItem = styled(Stack)<{ $achieved?: boolean; $disabled?: boolean }>`
   border: ${({ theme }) => `1px solid ${theme.palette.divider}`};
   background-color: ${({ $achieved, theme, $disabled }) =>
@@ -10,7 +8,7 @@ export const StyledHabitsCardListItem = styled(Stack)<{ $achieved?: boolean; $di
     $disabled
       ? theme.palette.text.disabled
       : $achieved
-        ? ACHIEVED_COLOR
+        ? theme.palette.info.main
         : theme.palette.background.default};
   border-radius: 8px;
   align-items: center;

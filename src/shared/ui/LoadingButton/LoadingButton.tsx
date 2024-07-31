@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material'
 import type { ButtonProps } from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 
@@ -16,7 +17,11 @@ export const LoadingButton: React.FC<LoadingButtonProps> = ({
 }) => {
   return (
     <StyledSubmitButton disabled={isLoading} onClick={onClick} {...props}>
-      {isLoading ? <CircularProgress color='inherit' size={24} /> : children}
+      {isLoading ? (
+        <CircularProgress color='primary' size={24} />
+      ) : (
+        <Typography variant='button'>{children}</Typography>
+      )}
     </StyledSubmitButton>
   )
 }

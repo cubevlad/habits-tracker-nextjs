@@ -44,7 +44,11 @@ export const HabitTableCellItemWithActions: React.FC<HabitTableCellItemWithActio
 
     return (
       <>
-        <StyledTableTd onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <StyledTableTd
+          className='sticky-col'
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           {hovered ? (
             <StyledActionsWrapper $height={rowHeight.current} direction='row' spacing={2}>
               <Edit fontSize='inherit' onClick={handleEdit} />

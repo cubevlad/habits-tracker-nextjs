@@ -50,7 +50,7 @@ export const NoteListItem: React.FC<NoteListItemProps> = observer(
               <Delete fontSize='small' sx={isSm ? MOBILE_ICON_SX : ICON_SX} />
             </IconButton>
           </StyledNoteListItemHeader>
-          <Typography sx={{ wordBreak: 'break-word' }} variant='body2'>
+          <Typography sx={{ wordBreak: 'break-word' }} variant='body1'>
             {note.content}
           </Typography>
         </StyledNoteListItem>
