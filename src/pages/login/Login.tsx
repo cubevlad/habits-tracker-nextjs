@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 
+import { useStatusCallback } from '@frknnice/feature-hooks'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Stack, TextField, Typography } from '@mui/material'
 import { AxiosError } from 'axios'
@@ -8,7 +9,6 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 import { api } from '@shared/api'
 import { useAuthCtx } from '@shared/context'
-import { useStatusCallback } from '@shared/lib'
 import { LoadingButton } from '@shared/ui'
 import { StyledForm, StyledFormWrapper, StyledTitle } from '@styles'
 

@@ -1,10 +1,11 @@
+import { useStatusCallback } from '@frknnice/feature-hooks'
 import { Delete, Edit } from '@mui/icons-material'
 import { Box, CircularProgress, Grid, Typography } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 
 import { DeleteModalContent } from '@features/TableView/ui/TableViewList/ui/HabitsList/ui/HabitTableCellItemWithActions/ui'
 import { useFormCtx, useStore } from '@shared/context'
-import { useModal, useStatusCallback } from '@shared/lib'
+import { useModal } from '@shared/lib'
 import type { Habit, TableViewItem } from '@shared/types'
 
 import { StyledHabitsCardListItem, StyledIconsWrapper } from './HabitsCardListItem.styled'

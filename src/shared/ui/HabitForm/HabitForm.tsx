@@ -1,12 +1,12 @@
 import { useLayoutEffect } from 'react'
 
+import { useStatusCallback } from '@frknnice/feature-hooks'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { TextField } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 import { useForm, FormProvider } from 'react-hook-form'
 
 import { useStore } from '@shared/context'
-import { useStatusCallback } from '@shared/lib'
 import type { Habit } from '@shared/types'
 import { StyledFormWrapper, StyledTitle, StyledForm } from '@styles'
 

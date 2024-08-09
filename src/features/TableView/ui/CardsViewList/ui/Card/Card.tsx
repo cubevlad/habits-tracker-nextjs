@@ -1,12 +1,13 @@
 import { useEffect, useRef } from 'react'
 
+import { useBoolean } from '@frknnice/feature-hooks'
 import { ArrowBack } from '@mui/icons-material'
 import { IconButton, Stack, Typography } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 import { flushSync } from 'react-dom'
 
 import { useFormCtx, useStore } from '@shared/context'
-import { useBoolean, useMatchMedia } from '@shared/lib'
+import { useMatchMedia } from '@shared/lib'
 import type { TableViewItem } from '@shared/types'
 import { Dialog } from '@shared/ui'
 

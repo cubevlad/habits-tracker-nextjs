@@ -1,8 +1,8 @@
 import { cloneElement, useCallback, useMemo, useRef } from 'react'
 
+import { useBoolean } from '@frknnice/feature-hooks'
 import { Button } from '@mui/material'
 
-import { useBoolean } from '@shared/lib'
 import type { Note } from '@shared/types'
 
 import { NoteForm } from './ui/NoteForm'

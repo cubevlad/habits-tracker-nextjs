@@ -1,8 +1,8 @@
+import { useStatusCallback } from '@frknnice/feature-hooks'
 import { Button, Stack } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 
 import { useStore } from '@shared/context'
-import { useStatusCallback } from '@shared/lib'
 import { LoadingButton } from '@shared/ui'
 import { StyledFormWrapper, StyledTitle } from '@styles'
 

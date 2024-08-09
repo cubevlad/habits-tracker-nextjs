@@ -1,8 +1,8 @@
+import { useStatusCallback } from '@frknnice/feature-hooks'
 import { Done } from '@mui/icons-material'
 import { Box, CircularProgress } from '@mui/material'
 import { observer } from 'mobx-react-lite'
 
-import { useStatusCallback } from '@/shared/lib'
 import { useStore } from '@shared/context'
 import type { HabitRecord } from '@shared/types'
 import { StyledTableTd } from '@styles'

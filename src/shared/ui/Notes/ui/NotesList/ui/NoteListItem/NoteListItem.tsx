@@ -32,7 +32,7 @@ export const NoteListItem: React.FC<NoteListItemProps> = observer(
 
     const gridProps = isCardsView
       ? { item: true, xs: 12 }
-      : { item: true, lg: 4, md: 6, sm: 6, xl: 2, xs: 12 }
+      : { item: true, lg: 6, md: 6, sm: 6, xl: true, xs: 12 }
 
     const { isSm } = useMatchMedia()
 
